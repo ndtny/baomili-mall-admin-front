@@ -32,7 +32,6 @@ export default defineComponent({
     };
   },
   created() {
-    this.fetchData();
   },
   methods: {
     statusFilter(status) {
@@ -54,11 +53,6 @@ export default defineComponent({
     },
     displayType(row) {
       return this.statusFilter(row.status);
-    },
-    fetchData() {
-      transactionList().then(response => {
-        this.list = response.data.items.slice(0, 8);
-      });
     }
   }
 });
