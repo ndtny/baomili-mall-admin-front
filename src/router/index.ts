@@ -1,16 +1,16 @@
-import { markRaw } from 'vue';
+// import { markRaw } from 'vue';
 import { createRouter, createWebHistory } from 'vue-router'; // createWebHashHistory, createWebHistory
 import type { Router, RouteRecordRaw, RouteComponent } from 'vue-router';
-import { Help as IconHelp } from '@element-plus/icons-vue';
+// import { Help as IconHelp } from '@element-plus/icons-vue';
 
 /* Layout */
 const Layout = ():RouteComponent => import('@/layout/index.vue');
 
 /* Router Modules */
-import componentsRouter from './modules/components';
+/*import componentsRouter from './modules/components';
 import chartsRouter from './modules/charts';
 import nestedRouter from './modules/nested';
-import tableRouter from './modules/table';
+import tableRouter from './modules/table';*/
 
 /**
  * constantRoutes
@@ -64,7 +64,7 @@ export const constantRoutes:RouteRecordRaw[] = [
       }
     ]
   },
-  {
+  /*{
     path: '/documentation',
     component: Layout,
     children: [
@@ -102,7 +102,7 @@ export const constantRoutes:RouteRecordRaw[] = [
         meta: { title: 'Profile', icon: 'user', noCache: true }
       }
     ]
-  }
+  }*/
 ];
 
 /**
@@ -112,7 +112,7 @@ export const constantRoutes:RouteRecordRaw[] = [
  * 注意：hidden、alwaysShow 属性配置移动到了meta中！！！
  */
 export const asyncRoutes:RouteRecordRaw[] = [
-  {
+  /*{
     path: '/permission',
     component: Layout,
     redirect: '/permission/page',
@@ -165,15 +165,15 @@ export const asyncRoutes:RouteRecordRaw[] = [
         meta: { title: 'Icons', icon: 'icon', noCache: true }
       }
     ]
-  },
+  },*/
 
   // /** when your routing map is too long, you can split it into small modules **/
-  componentsRouter,
+/*  componentsRouter,
   chartsRouter,
   nestedRouter,
-  tableRouter,
+  tableRouter,*/
 
-  {
+  /*{
     path: '/example',
     component: Layout,
     redirect: '/example/list',
@@ -215,9 +215,9 @@ export const asyncRoutes:RouteRecordRaw[] = [
         meta: { title: 'Tab', icon: 'tab' }
       }
     ]
-  },
+  },*/
 
-  {
+/*  {
     path: '/error',
     component: Layout,
     redirect: 'noRedirect',
@@ -253,9 +253,9 @@ export const asyncRoutes:RouteRecordRaw[] = [
         meta: { title: 'Error Log', icon: 'bug' }
       }
     ]
-  },
+  },*/
 
-  {
+  /*{
     path: '/excel',
     component: Layout,
     redirect: '/excel/export-excel',
@@ -393,7 +393,7 @@ export const asyncRoutes:RouteRecordRaw[] = [
         meta: { title: 'WebSocketDemo', icon: 'lock' }
       }
     ]
-  },
+  },*/
 
   // 404 page must be placed at the end !!!
   { path: '/:pathMatch(.*)*', redirect: '/404', meta: { hidden: true }}
