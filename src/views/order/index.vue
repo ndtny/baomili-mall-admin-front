@@ -1,10 +1,10 @@
 <template>
-  <div style="height: 80vh">
+  <div style="display: flex; flex-direction: column">
     <el-row :gutter="10" style="padding: 5px 5px">
       <el-col :span="4">
         <el-input size="small" placeholder="订单号"></el-input>
       </el-col>
-      <el-col :span="8">
+      <el-col :span="9">
         <el-date-picker
             v-model="times"
             type="datetimerange"
@@ -18,7 +18,7 @@
         <el-button size="small" type="primary">查询</el-button>
       </el-col>
     </el-row>
-    <el-table :data="tableData" stripe border fit max-height="80vh" style="width: 100%; overflow-y: auto;">
+    <el-table :data="tableData" stripe border fit max-height="84vh" style="width: 100%; overflow-y: auto;">
       <el-table-column align="center" type="selection" width="50"/>
       <el-table-column align="center" prop="index" label="序号" width="60" fixed="left"/>
       <el-table-column :show-overflow-tooltip="true" align="center" prop="orderNumber" label="订单号" width="180"
