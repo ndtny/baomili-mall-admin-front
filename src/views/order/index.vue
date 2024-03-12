@@ -68,7 +68,19 @@
 
 import { ref } from 'vue';
 
-const tableData = ref<any>([]);
+interface tableColumn {
+  index: number,
+  orderNumber: string,
+  productTotalPrice: number,
+  freight: number,
+  actualPayment: number,
+  paymentWay: number,
+  createdTime: string,
+  paymentTime: string,
+  shippingTime: string
+}
+
+const tableData = ref<tableColumn[]>([]);
 function generatorOrderList():void {
   for (let i = 0; i < 30; i++) {
     const item = {
@@ -89,7 +101,7 @@ generatorOrderList();
 
 const times = ref<[Date, Date]>([
   new Date(2024, 3, 1, 0, 0, 0),
-  new Date(2024, 3, 15, 23, 59, 59),
+  new Date(2024, 3, 15, 23, 59, 59)
 ]);
 
 const currentPage = ref(1);

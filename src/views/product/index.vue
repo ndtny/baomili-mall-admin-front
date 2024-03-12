@@ -102,7 +102,30 @@
 
 import { ref } from 'vue';
 
-const tableData = ref<any>([]);
+interface tableColumn {
+  index: number,
+  productNumber: string,
+  productName: string,
+  productBrandName: string,
+  productCategoryName: string,
+  productPicture: string,
+  publishStatus: number,
+  newProductStatus: number,
+  price: number,
+  promotionPrice: number,
+  giftPoints: number,
+  description: string,
+  stock: number,
+  weight: number,
+  promotionStartTime: string,
+  promotionEndTime: string,
+  createdBy: string,
+  createdTime: string,
+  updatedBy: string,
+  updatedTime: string
+}
+
+const tableData = ref<tableColumn[]>([]);
 function generatorProductList():void {
   for (let i = 0; i < 30; i++) {
     const item = {
@@ -134,7 +157,7 @@ generatorProductList();
 
 const times = ref<[Date, Date]>([
   new Date(2024, 3, 1, 0, 0, 0),
-  new Date(2024, 3, 15, 23, 59, 59),
+  new Date(2024, 3, 15, 23, 59, 59)
 ]);
 
 const currentPage = ref(1);
