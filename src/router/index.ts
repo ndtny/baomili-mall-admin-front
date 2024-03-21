@@ -1,6 +1,7 @@
 // import { markRaw } from 'vue';
 import { createRouter, createWebHistory } from 'vue-router'; // createWebHashHistory, createWebHistory
 import type { Router, RouteRecordRaw, RouteComponent } from 'vue-router';
+import layout from '@/layout/index.vue';
 // import { Help as IconHelp } from '@element-plus/icons-vue';
 
 /* Layout */
@@ -67,26 +68,83 @@ export const constantRoutes:RouteRecordRaw[] = [
   {
     path: '/order',
     component: Layout,
-    redirect: '/order/index',
+    redirect: '/order-list/index',
+    meta: { title: '订单管理', icon: 'form' },
     children: [
       {
         path: 'index',
-        component: () => import('@/views/order/index.vue'),
-        name: 'Order',
-        meta: { title: '订单管理', icon: 'form', noCache: true }
+        component: () => import('@/views/order/order-list/index.vue'),
+        children: [
+          {
+            path: 'order-list',
+            component: () => import('@/views/order/order-list/index.vue'),
+            name: 'Order',
+            meta: { title: '订单列表', icon: 'form', noCache: true }
+          }
+        ]
       }
     ]
   },
   {
     path: '/product',
     component: Layout,
-    redirect: '/product/index',
+    redirect: '/product-list/index',
+    meta: { title: '商品管理', icon: 'form' },
     children: [
       {
-        path: 'index',
-        component: () => import('@/views/product/index.vue'),
-        name: 'Product',
-        meta: { title: '商品管理', icon: 'form', noCache: true }
+        path: 'product-list',
+        component: () => import('@/views/product/product-list/index.vue'),
+        meta: { title: '商品列表', icon: 'form', noCache: true },
+        children: [
+          {
+            path: 'product-list',
+            component: () => import('@/views/product/product-list/index.vue'),
+            name: 'Product',
+            meta: { title: '商品列表', icon: 'form', noCache: true }
+          }
+        ]
+      }
+    ]
+  },
+  {
+    path: '/member',
+    component: Layout,
+    redirect: '/member-list/index',
+    meta: { title: '会员服务', icon: 'form' },
+    children: [
+      {
+        path: '/member-list',
+        component: () => import('@/views/member/member-list/index.vue'),
+        meta: { title: '会员列表', icon: 'form', noCache: true },
+        children: [
+          {
+            path: '/member-list',
+            component: () => import('@/views/member/member-list/index.vue'),
+            name: 'Member',
+            meta: { title: '会员列表', icon: 'form', noCache: true }
+          }
+        ]
+      }
+    ]
+  },
+  {
+    path: '/stock',
+    component: Layout,
+    redirect: '/stock-list/index',
+    meta: { title: '库存服务', icon: 'form' },
+    children: [
+      {
+        path: '/stock-list',
+        component: () => import('@/views/stock/stock-list/index.vue'),
+        meta: { title: '库存列表', icon: 'form', noCache: true },
+        children: [
+          {
+            path: '/stock-list',
+            component: () => import('@/views/stock/stock-list/index.vue'),
+            name: 'Stock',
+            meta: { title: '库存列表', icon: 'form', noCache: true }
+          }
+        ]
       }
     ]
   }
