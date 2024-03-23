@@ -32,9 +32,9 @@ export default defineStore({
       return new Promise((resolve, reject) => {
         apiLogin({ identityId: username.trim(), credential: password }).then(response => {
           const { data } = response;
-          this.token = data.username;
-          console.log("this.token",this.token)
-          setToken(data.username);
+          this.token = data.userName;
+          console.log('this.token', this.token);
+          setToken(data.userName);
           resolve();
         }).catch(error => {
           reject(error);
@@ -78,9 +78,6 @@ export default defineStore({
           this.roles = [];
           removeToken();
           resetRouter();
-
-          // reset visited views and cached views
-          // to fixed https://github.com/PanJiaChen/vue-element-admin/issues/2485
           tagsViewStore().delAllViews();
 
           resolve();

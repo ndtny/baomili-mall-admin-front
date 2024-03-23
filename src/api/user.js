@@ -2,15 +2,15 @@ import request from '@/utils/request';
 
 export function login(data) {
   return request({
-    url: '/admin/umsUserAuth/login',
+    url: '/admin/umsUser/login',
     method: 'post',
-    data:data
+    data: data
   });
 }
 
 export function getInfo(token) {
   return request({
-    url: '/admin/umsUserAuth/info',
+    url: '/admin/umsUser/info',
     method: 'get',
     params: { token }
   });
@@ -18,8 +18,7 @@ export function getInfo(token) {
 
 export function logout(token) {
   return request({
-    url: '/vue-element-admin/user/logout',
-    method: 'post',
-    params: { token }
+    url: '/admin/umsUser/logout?token=' + token,
+    method: 'post'
   });
 }

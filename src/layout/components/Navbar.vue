@@ -61,6 +61,7 @@ import Screenfull from '@/components/Screenfull';
 import Search from '@/components/HeaderSearch';
 import { defineComponent } from 'vue';
 import { CaretBottom } from '@element-plus/icons-vue';
+import Cookies from 'js-cookie';
 
 export default defineComponent({
   components: {
@@ -86,8 +87,8 @@ export default defineComponent({
       store.app().toggleSidebar();
     },
     async logout() {
-      // await store.user().logout();
-      this.$router.push('/login')
+      await store.user().logout(Cookies.get('Admin-Token'));
+      this.$router.push('/login');
       // this.$router.push(`/login?redirect=${this.$route.fullPath}`);
     }
   }
