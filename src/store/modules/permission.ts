@@ -55,12 +55,13 @@ export default defineStore({
       this.routes = constantRoutes.concat(routes);
     },
     generateRoutes(roles: string[]) {
-      let accessedRoutes;
+      let accessedRoutes: any;
       if (roles.includes('admin')) {
         accessedRoutes = asyncRoutes || [];
       } else {
         accessedRoutes = filterAsyncRoutes(asyncRoutes, roles);
       }
+      console.log('accessedRoutes', accessedRoutes);
       this.setRoutes(accessedRoutes);
       return accessedRoutes;
     }

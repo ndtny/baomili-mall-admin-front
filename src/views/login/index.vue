@@ -4,91 +4,63 @@
       label-position="left">
 
       <div class="title-container">
-        <h3 class="title">Login Form</h3>
+        <div class="title">苞米粒商城</div>
       </div>
 
       <el-form-item prop="username">
         <span class="svg-container">
           <svg-icon icon-class="user" />
         </span>
-        <el-input ref="username" v-model="loginForm.username" placeholder="Username" name="username" type="text"
+        <el-input ref="username" v-model="loginForm.username" placeholder="用户名" type="text"
           tabindex="1" autocomplete="on" />
       </el-form-item>
 
-      <el-tooltip v-model="capsTooltip" content="Caps lock is On" placement="right" manual>
-        <el-form-item prop="password">
+      <el-form-item prop="password">
           <span class="svg-container">
-            <svg-icon icon-class="password" />
+            <svg-icon icon-class="password"/>
           </span>
-          <el-input :key="passwordType" ref="password" v-model="loginForm.password" :type="passwordType"
-            placeholder="Password" name="password" tabindex="2" autocomplete="on" @keyup="checkCapslock"
-            @blur="capsTooltip = false" @keyup.enter="handleLogin" />
-          <span class="show-pwd" @click="showPwd">
-            <svg-icon :icon-class="passwordType === 'password' ? 'eye' : 'eye-open'" />
+        <el-input :key="passwordType" ref="password" v-model="loginForm.password" :type="passwordType"
+                  placeholder="请输入密码" tabindex="2" autocomplete="on" @keyup="checkCapslock"
+                  @blur="capsTooltip = false" @keyup.enter="handleLogin"/>
+        <span class="show-pwd" @click="showPwd">
+            <svg-icon :icon-class="passwordType === 'password' ? 'eye' : 'eye-open'"/>
           </span>
-        </el-form-item>
-      </el-tooltip>
+      </el-form-item>
 
       <el-button :loading="loading" type="primary" style="width:100%;margin-bottom:30px;" @click.prevent="handleLogin">
-        Login</el-button>
-
-      <div style="position:relative">
-        <div class="tips">
-          <span>Username : admin</span>
-          <span>Password : any</span>
-        </div>
-        <div class="tips">
-          <span style="margin-right:18px;">Username : editor</span>
-          <span>Password : any</span>
-        </div>
-
-        <el-button class="thirdparty-button" type="primary" @click="showDialog = true">
-          Or connect with
-        </el-button>
-      </div>
+        登 录</el-button>
     </el-form>
-
-    <el-dialog title="Or connect with" v-model="showDialog">
-      Can not be simulated on local, so please combine you own business simulation! ! !
-      <br>
-      <br>
-      <br>
-      <social-sign />
-    </el-dialog>
   </div>
 </template>
 
 <script lang="ts">
-import { validUsername } from '@/utils/validate';
 import { defineComponent } from 'vue';
-import SocialSign from './components/SocialSignin.vue';
 import type { FormItemRule } from 'element-plus';
 import type { IForm } from '@/types/element-plus';
 import store from '@/store';
-import {login as apiLogin} from "@/api/user";
 
 export default defineComponent({
   name: 'Login',
-  components: { SocialSign },
+  components: { },
   data() {
     const validateUsername: FormItemRule['validator'] = (_rule, value, callback) => {
-      if (!validUsername(value)) {
-        callback(new Error('Please enter the correct user name'));
+      if (!value) {
+        callback(new Error('请输入用户名'));
       } else {
         callback();
       }
     };
     const validatePassword: FormItemRule['validator'] = (_rule, value, callback) => {
       if (value.length < 6) {
-        callback(new Error('The password can not be less than 6 digits'));
+        callback(new Error('密码长度不能小于6位'));
       } else {
         callback();
       }
     };
     return {
       loginForm: {
-        username: 'admin',
-        password: '123456'
+        username: '',
+        password: ''
       },
       loginRules: {
         username: [{ required: true, trigger: 'blur', validator: validateUsername }],
@@ -97,7 +69,6 @@ export default defineComponent({
       passwordType: 'password',
       capsTooltip: false,
       loading: false,
-      showDialog: false,
       redirect: undefined,
       otherQuery: {}
     };
@@ -128,7 +99,7 @@ export default defineComponent({
     // window.removeEventListener('storage', this.afterQRScan)
   },
   methods: {
-    checkCapslock(e) {
+    checkCapslock(e:any) {
       const { key } = e;
       this.capsTooltip = key && key.length === 1 && (key >= 'A' && key <= 'Z');
     },
@@ -155,12 +126,11 @@ export default defineComponent({
               this.loading = false;
             });
         } else {
-          console.log('error submit!!');
           return false;
         }
       });
     },
-    getOtherQuery(query) {
+    getOtherQuery(query:any) {
       return Object.keys(query).reduce((acc, cur) => {
         if (cur !== 'redirect') {
           acc[cur] = query[cur];
@@ -285,9 +255,9 @@ $light_gray: #eee;
     position: relative;
 
     .title {
-      font-size: 26px;
+      font-size: 32px;
       color: $light_gray;
-      margin: 0px auto 40px auto;
+      margin: 0 auto 40px auto;
       text-align: center;
       font-weight: bold;
     }
@@ -303,14 +273,14 @@ $light_gray: #eee;
     user-select: none;
   }
 
-  .thirdparty-button {
+  .thirdParty-button {
     position: absolute;
     right: 0;
     bottom: 6px;
   }
 
   @media only screen and (max-width: 470px) {
-    .thirdparty-button {
+    .thirdParty-button {
       display: none;
     }
   }

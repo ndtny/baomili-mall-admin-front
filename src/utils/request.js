@@ -1,7 +1,7 @@
 import axios from 'axios';
 import store from '@/store';
 import { getToken } from '@/utils/auth';
-import {ElMessage, ElMessageBox} from "element-plus";
+import { ElMessage, ElMessageBox } from 'element-plus';
 
 // create an axios instance
 const service = axios.create({
@@ -43,31 +43,27 @@ service.interceptors.response.use(
    * You can also judge the status by HTTP Status Code
    */
   response => {
-    const res = response.data;
-    console.log("response",response)
-    // if the custom code is not 20000, it is judged as an error.
-    if (res.code !== 200) {
+    console.log('response', response);
+    // if the custom code is not 200, it is judged as an error.
+    if (response.data.code !== 200) {
       ElMessage({
-        message: res.message || 'Error',
+        message: response.data.message || '未知异常，请联系管理员',
         type: 'error',
         duration: 5 * 1000
       });
 
-      // 50008: Illegal token; 50012: Other clients logged in; 50014: Token expired;
-      if (res.code === 50008 || res.code === 50012 || res.code === 50014) {
-        // to re-login
-        ElMessageBox.confirm('You have been logged out, you can cancel to stay on this page, or log in again', 'Confirm logout', {
-          confirmButtonText: 'Re-Login',
-          cancelButtonText: 'Cancel',
-          type: 'warning'
-        }).then(() => {
-          store.user().resetToken();
-          location.reload();
-        });
+      // 500: Illegal token; 401: Other clients logged in; 403: Token expired;
+      if (response.data.code === 500) {
+        return Promise.reject(new Error(response.data.message || '未知异常'));
       }
-      return Promise.reject(new Error(res.message || 'Error'));
+      if (response.data.code === 401) {
+        return Promise.reject(new Error('用户权限不足'));
+      }
+      if (response.data.code === 403) {
+        return Promise.reject(new Error('用户信息失效，请重新登录'));
+      }
     } else {
-      return res;
+      return response;
     }
   },
   error => {

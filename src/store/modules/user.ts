@@ -30,13 +30,18 @@ export default defineStore({
     login(userInfo):Promise<void> {
       const { username, password } = userInfo;
       return new Promise((resolve, reject) => {
-        apiLogin({ identityId: username.trim(), credential: password }).then(response => {
-          const { data } = response;
-          this.token = data.userName;
-          console.log('this.token', this.token);
-          setToken(data.userName);
+        apiLogin({ identityId: username.trim(), credential: password }).then(({ data }) => {
+          if (data && data.code === 200) {
+            this.token = data.userName;
+            setToken(data.userName);
+          }
           resolve();
         }).catch(error => {
+          ElMessage({
+            message: '登陆失败',
+            type: 'error',
+            duration: 3000
+          });
           reject(error);
         });
       });
@@ -45,27 +50,24 @@ export default defineStore({
     // get user info
     getInfo() {
       return new Promise((resolve, reject) => {
-        apiGetInfo(this.token).then(response => {
-          const { data } = response;
-
-          if (!data) {
-            reject('Verification failed, please Login again.');
+        apiGetInfo(this.token).then(({ data }) => {
+          if (data && data.code === 200) {
+            // roles must be a non-empty array
+            if (!data.data.roles || data.data.roles.length <= 0) {
+              reject('getInfo: roles must be a non-null array!');
+            }
+            this.roles = data.data.roles;
+            this.name = data.data.name;
+            this.avatar = data.data.avatar;
+            this.introduction = data.data.introduction;
+            resolve(data.data);
           }
-
-          const { roles, name, avatar, introduction } = data;
-
-          // roles must be a non-empty array
-          if (!roles || roles.length <= 0) {
-            reject('getInfo: roles must be a non-null array!');
-          }
-
-          this.roles = roles;
-          this.name = name;
-          this.avatar = avatar;
-          this.introduction = introduction;
-          resolve(data);
         }).catch(error => {
-          reject(error);
+          ElMessage({
+            message: error.message,
+            type: 'error',
+            duration: 3000
+          });
         });
       });
     },
@@ -73,13 +75,12 @@ export default defineStore({
     // user logout
     logout():Promise<void> {
       return new Promise((resolve, reject) => {
-        apiLogout(this.token).then(() => {
+        apiLogout().then(() => {
           this.token = '';
           this.roles = [];
           removeToken();
           resetRouter();
           tagsViewStore().delAllViews();
-
           resolve();
         }).catch(error => {
           reject(error);

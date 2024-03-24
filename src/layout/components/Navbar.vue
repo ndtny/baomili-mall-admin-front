@@ -13,10 +13,6 @@
 
         <screenfull id="screenfull" class="right-menu-item hover-effect" />
 
-        <!-- <el-tooltip content="Global Size" effect="dark" placement="bottom">
-          <size-select id="size-select" class="right-menu-item hover-effect" />
-        </el-tooltip> -->
-
       </template>
 
       <el-dropdown class="avatar-container right-menu-item hover-effect" trigger="click">
@@ -57,11 +53,9 @@ import Breadcrumb from '@/components/Breadcrumb';
 import Hamburger from '@/components/Hamburger';
 import ErrorLog from '@/components/ErrorLog';
 import Screenfull from '@/components/Screenfull';
-// import SizeSelect from '@/components/SizeSelect';
 import Search from '@/components/HeaderSearch';
 import { defineComponent } from 'vue';
 import { CaretBottom } from '@element-plus/icons-vue';
-import Cookies from 'js-cookie';
 
 export default defineComponent({
   components: {
@@ -69,7 +63,6 @@ export default defineComponent({
     Hamburger,
     ErrorLog,
     Screenfull,
-    // SizeSelect,
     Search,
     CaretBottom
   },
@@ -87,7 +80,7 @@ export default defineComponent({
       store.app().toggleSidebar();
     },
     async logout() {
-      await store.user().logout(Cookies.get('Admin-Token'));
+      await store.user().logout();
       this.$router.push('/login');
       // this.$router.push(`/login?redirect=${this.$route.fullPath}`);
     }

@@ -1,5 +1,10 @@
 import request from '@/utils/request';
 
+/**
+ * 登录
+ * @param data
+ * @returns {*}
+ */
 export function login(data) {
   return request({
     url: '/admin/umsUser/login',
@@ -8,6 +13,11 @@ export function login(data) {
   });
 }
 
+/**
+ * 获取用户角色权限
+ * @param token
+ * @returns {*}
+ */
 export function getInfo(token) {
   return request({
     url: '/admin/umsUser/info',
@@ -16,9 +26,13 @@ export function getInfo(token) {
   });
 }
 
-export function logout(token) {
+/**
+ * 退出
+ * @returns {*}
+ */
+export function logout() {
   return request({
-    url: '/admin/umsUser/logout?token=' + token,
+    url: '/admin/umsUser/logout',
     method: 'post'
   });
 }
